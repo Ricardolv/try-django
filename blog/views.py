@@ -35,10 +35,14 @@ def blog_post_create_view(request):
     #     obj = BlogPost.objects.create(**form.cleaned_data)
     #     form = BlogPostForm()
 
+    # if not request.user.is_authenticated:
+    #     return render(request, "not-a-user.html", {})
+
     #  BlogPostModelForm
     form = BlogPostModelForm(request.POST or None)
     if form.is_valid():
         obj = form.save(commit=False)
+        obj.user = request.user
         obj.save()
 
         form = BlogPostModelForm()
