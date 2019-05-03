@@ -5,12 +5,8 @@ from django.template.loader import get_template
 
 def home_page(request):
     my_title = "hello there..."
-    context       = {"title": my_title}
-    template_name = "title.txt"
-    template_obj  = get_template(template_name)
-    rendered_string = template_obj.render(context)
-
-    return render(request, "hello_word.html", {"title": rendered_string})
+    context  = {"title": my_title}
+    return render(request, "home.html", context)
 
 
 def about_page(request):
