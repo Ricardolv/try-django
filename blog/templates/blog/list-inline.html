@@ -3,7 +3,20 @@
     <img class="card-img-top" src="holder.js/100px180/" alt="">
     <div class="card-body">
         <h4 class="card-title">{{ blog_post.title }}</h4>
-        <p class="card-text">{{ blog_post.content }}</p>
+        <p class="card-text">
+
+            {% if truncate %}
+                {{ blog_post.content|linebreaks|truncatewords:30 }}
+            {% else %}
+                {{ blog_post.content|linebreaks }}
+            {% endif %}
+
+        </p>
+
+        {% if not detail %}
+            <a href="{{ blog_post.get_absolute_url }}">View</a>
+        {% endif %}
+
     </div>
     </div>
 </div>
