@@ -1,9 +1,23 @@
 from django.conf import settings
 from django.db import models
-
+from django.utils import timezone
 # Create your models here.
 
 User = settings.AUTH_USER_MODEL
+
+class BlogPostQuerySet(models.QuerySet):
+    def published(self):
+        now = timezone.now()
+        return self.filter(publish_date__lte=now)
+
+
+class BlogPostManager(models.Manager):
+    def get_queryset(self):
+        return BlogPostQuerySet(self.model, using=self._db)
+
+    def published(self):
+        return self.get_queryset().published()
+
 
 class BlogPost(models.Model): # blogpost_set -> queryset
     user = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL)
@@ -14,8 +28,10 @@ class BlogPost(models.Model): # blogpost_set -> queryset
     timestamp = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
 
+    objects = BlogPostManager()
+
     class Meta:
-        ordering = ['-pk', '-publish_date', '-update', 'timestamp']
+        ordering = ['-publish_date', '-update', 'timestamp']
 
     def get_absolute_url(self):
         return f"/blog/{self.slug}"
