@@ -26,7 +26,7 @@ SECRET_KEY = '45)=v%_+vwu*3vitk3ei5(y3+9&3^9)-c7tgl#)d$a(0foig(&'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+LOGIN_URL = '/login'
 
 # Application definition
 
