@@ -2,18 +2,20 @@
 
 {% block content %}
 
-    {{ title }}
+    <h1> {{ title }} </h1>
 
-    {{ request.user }}
+    {% comment %}
+        {{ request.user }}
 
-    {{ request.path }}
+        {{ request.path }}
 
-    {{ user }}
+        {{ user }}
 
-    {{ user.is_authenticated }}
+        {{ user.is_authenticated }}
+    {% endcomment %}
 
-    {% for a in my_List %}
-            <li> {{ a }} </li>
+    {% for a in blog_list %}
+        {% include 'blog/list-inline.html' with blog_post=a %}
     {% endfor %}
 
 {% endblock  %}
