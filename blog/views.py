@@ -19,8 +19,13 @@ def blog_post_list_view(request):
     # list out objects
     # could be search
     qs = BlogPost.objects.all().published() # queryset -> list of python object
+    if request.user.is_authenticated:
+        my_qs = BlogPost.objects.filter(user=request.user)
+        qs = (qs | my_qs).distinct()
+
     template_name = 'blog/list.html'
     context = {'object_list': qs}
+
     return render(request, template_name, context)
 
 #@login_required
@@ -44,7 +49,6 @@ def blog_post_create_view(request):
         obj = form.save(commit=False)
         obj.user = request.user
         obj.save()
-
         form = BlogPostModelForm()
 
     template_name = 'form.html'
@@ -64,7 +68,6 @@ def blog_post_update_view(request, slug):
     form = BlogPostModelForm(request.POST or None, instance=obj)
     if form.is_valid():
         form.save()
-
     template_name = 'form.html'
     context = {"title": f"Update {obj.title}", 'form': form}
     return render(request, template_name, context)
