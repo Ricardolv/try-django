@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.template.loader import get_template
 # Dont Repeat Yourself = DRY
 
+from .forms import ConcatForm
+
 def home_page(request):
     my_title = "hello there..."
     context  =  {"title": "My title"}
@@ -16,8 +18,16 @@ def about_page(request):
 
 
 def contact_page(request):
+    form = ConcatForm(request.POST or None)
+    if form.is_valid():
+        print(form.cleaned_data)
+        form = ConcatForm()
 
-    return render(request, "form.html", {"title": "Contact"})
+    context = {
+        "title": "Contact us",
+        "form": form
+    }
+    return render(request, "form.html", context)
 
 
 def example_page(request):

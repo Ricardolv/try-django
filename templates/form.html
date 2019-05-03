@@ -5,12 +5,8 @@
     {% if title %}
         <h1>{{ title }}</h1>
     {% endif %}
-    <form method='POST' action='.'>
-        {% csrf_token %}
-        <input name="full_name" id="name" type="text" >
-        <input name="email" id="email" type="email" >
-
-        <textarea name="content" id="content"></textarea>
+    <form method='POST' action='.'> {% csrf_token %}
+        {{ form.as_p }}
         <button type="submit">Send</button>
     </form>
 {% endblock  %}
