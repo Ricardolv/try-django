@@ -44,13 +44,12 @@ def blog_post_create_view(request):
     #     return render(request, "not-a-user.html", {})
 
     #  BlogPostModelForm
-    form = BlogPostModelForm(request.POST or None)
+    form = BlogPostModelForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         obj = form.save(commit=False)
         obj.user = request.user
         obj.save()
         form = BlogPostModelForm()
-
     template_name = 'form.html'
     context = {'form': form}
     return render(request, template_name, context)
