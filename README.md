@@ -1,7 +1,7 @@
 # Try Django
 
 ## Seutp
-cd try-django/
+cd try-django/ <br/>
 bash setup.sh
 
 ## Start
