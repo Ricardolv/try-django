@@ -21,6 +21,7 @@ from blog.views import (
     blog_post_create_view,
 )
 
+from searches.views import search_view
 from .views import (
     home_page,
     about_page,
@@ -33,6 +34,7 @@ urlpatterns = [
 
     path('blog-new/', blog_post_create_view),
     path('blog/', include('blog.urls')),
+    path('search/', search_view),
 
     #re_path(r'^blog/(?P<slug>\w+)/$', blog_post_detail_page),
     re_path(r'^pages?/$', about_page),
